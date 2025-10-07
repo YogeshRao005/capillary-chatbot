@@ -1,183 +1,115 @@
-```markdown
-# 🧠 CapillaryTech Documentation Chatbot
+CapillaryTech Documentation Chatbot
+A Flask-based chatbot that answers queries using pre-scraped CapillaryTech documentation. It leverages a FAISS index for efficient document retrieval and the OpenRouter API to generate concise, text-based responses without external links, ensuring accuracy and relevance.
+Features
 
-The **CapillaryTech Documentation Chatbot** is a **Flask-based web application** that intelligently answers queries related to **CapillaryTech APIs and documentation**. It uses **FAISS** for fast semantic retrieval from scraped documentation and integrates with the **OpenRouter API** to generate concise, natural-language responses in **2–3 bullet points**. The chatbot provides accurate, context-aware answers directly from CapillaryTech documentation and handles unrelated queries gracefully.
+Queries a FAISS index of CapillaryTech documentation for relevant content.
+Scrapes and cleans content from metadata URLs for context.
+Generates brief, bullet-point answers (2-3 points) using OpenRouter API.
+User-friendly web interface built with HTML and Tailwind CSS.
+Handles off-topic queries with appropriate text fallbacks.
 
----
-
-## 🚀 Features
-- 🔍 **Semantic Search with FAISS:** Retrieves top relevant documentation results based on query embeddings.  
-- 🧩 **Scraped Local Data:** Uses pre-scraped and indexed CapillaryTech documentation stored locally for accuracy.  
-- 🧠 **OpenRouter LLM Integration:** Summarizes responses into 2–3 clear, human-like bullet points.  
-- ⚙️ **Flask Backend:** Lightweight and efficient REST API with clean structure.  
-- 💬 **TailwindCSS Chat UI:** Modern, responsive, and user-friendly interface for interaction.  
-- 🧾 **Debug Logging:** Shows query sources and embedding search logs in the backend console for transparency.  
-
----
-
-## 🗂️ Project Structure
-```
-
-capillery/
-├── app.py
-├── scraper.py
-├── rebuild_index.py
+Project Structure
+capillarytech-chatbot/
 ├── data/
 │   └── faiss_index/
 │       ├── index.faiss
 │       └── metadata.json
 ├── templates/
 │   └── index.html
+├── app.py
 ├── requirements.txt
-└── venv/
+└── README.md
 
-````
+Setup
 
----
-
-## ⚙️ Installation & Setup
-
-### 1️⃣ Clone the Repository
-```bash
-git clone https://github.com/yourusername/capillarytech-chatbot.git
+Clone the Repository:git clone https://github.com/[your-username]/capillarytech-chatbot.git
 cd capillarytech-chatbot
-````
 
-### 2️⃣ Create and Activate Virtual Environment
 
-```bash
-python -m venv venv
-# Windows:
-venv\Scripts\activate
-# macOS/Linux:
-source venv/bin/activate
-```
+Install Dependencies:Ensure Python 3.8+ is installed, then run:pip install -r requirements.txt
 
-### 3️⃣ Install Dependencies
+Contents of requirements.txt:flask==2.3.2
+sentence-transformers==2.2.2
+faiss-cpu==1.7.4
+numpy==1.24.3
+requests==2.31.0
+beautifulsoup4==4.12.2
 
-```bash
-pip install -r requirements.txt
-```
 
-### 4️⃣ Scrape Documentation
+Prepare Data:
+Ensure data/faiss_index/index.faiss and metadata.json exist, containing pre-scraped CapillaryTech documentation embeddings and metadata (URLs and titles).
+Verify the FAISS index aligns with metadata.json to avoid incorrect data retrieval.
 
-This step collects the CapillaryTech documentation and saves it as a JSONL file.
 
-```bash
-python scraper.py
-```
+Run the Application:python app.py
 
-### 5️⃣ Build the FAISS Index
+Open http://localhost:5000 in a browser.
 
-Convert the scraped data into vector embeddings and store it in `data/faiss_index/`.
+Usage
 
-```bash
-python rebuild_index.py
-```
+Web Interface:
+Access the chatbot at http://localhost:5000.
+Enter queries about CapillaryTech APIs or documentation (e.g., "What are path parameters?", "How to authenticate?").
+Receive brief, text-based answers in 2-3 bullet points without links.
 
-### 6️⃣ Set Your OpenRouter API Key
 
-```bash
-setx OPENROUTER_API_KEY "your_openrouter_api_key"
-```
+Example Queries and Responses:
+Query: "What are path parameters?"
+Answer: - Path parameters are URL variables like {userId}.
+- They identify resources in API calls.
 
-*(Restart your terminal after setting the key.)*
 
-### 7️⃣ Run the Flask Application
 
-```bash
-python app.py
-```
 
-The app will start at:
-👉 **[http://127.0.0.1:5000/](http://127.0.0.1:5000/)**
+Query: "How to authenticate?"
+Answer: - Use API keys in Authorization header.
+- Bearer <token> format.
 
----
 
-## 💬 Usage
 
-1. Open the chatbot in your browser.
-2. Type your question (e.g., **“How to get user activity logs?”**) in the input box.
-3. The chatbot retrieves top sources from CapillaryTech documentation and returns a summarized, bullet-point answer.
-4. Off-topic or unrelated questions (like job or company info) are handled gracefully with fallback responses.
 
----
+Query: "What is the salary?"
+Answer: - Check official careers page for job-related queries.
 
-## 📊 Example Interaction
 
-**User:**
 
-> Where to get user activity logs?
 
-**Chatbot Response:**
 
-* You can access activity logs via **Member Care → Customer Overview** for basic details.
-* For behavioral events (e.g., app usage or cart abandonment), go to **Events → Behavioral Events**.
-* Use the **Customer Activity History API** for programmatic access to user logs.
 
----
+Debugging:
+Check terminal logs for scraped content (Scraped <url>: ...) and context (Context for ...) to ensure data is sourced correctly.
+Verify the OpenRouter API key is valid and has sufficient quota.
 
-## 🧱 Technologies Used
 
-| Component       | Technology                                 |
-| --------------- | ------------------------------------------ |
-| Backend         | Flask (Python)                             |
-| Vector Search   | FAISS                                      |
-| Embeddings      | Sentence Transformers (`all-MiniLM-L6-v2`) |
-| LLM Integration | OpenRouter API (GPT-4o-mini)               |
-| Frontend        | HTML + Tailwind CSS                        |
-| Data Source     | Scraped CapillaryTech Documentation        |
 
----
+Dependencies
 
-## 🧪 Debugging
+Python 3.8+
+Flask==2.3.2
+sentence-transformers==2.2.2
+faiss-cpu==1.7.4
+numpy==1.24.3
+requests==2.31.0
+beautifulsoup4==4.12.2
 
-* If the page is blank, ensure `index.html` is located in the `templates/` directory.
-* Check that `data/faiss_index/index.faiss` and `metadata.json` exist.
-* Run in debug mode:
+Notes
 
-  ```bash
-  flask --app app run --debug
-  ```
-* Console logs will show:
+The chatbot uses only pre-scraped data from data/faiss_index/ to ensure accurate responses.
+Responses are generated without external links, focusing on concise explanations.
+Off-topic queries (e.g., job-related) are handled with appropriate text fallbacks.
 
-  * Queries received
-  * FAISS search results
-  * Sources retrieved
-  * Any API call errors
+Demo
+A 1-minute demo video showcasing the chatbot’s functionality is available at: [Google Drive link] (to be updated after recording).
+Troubleshooting
 
----
+Incorrect Answers: Verify index.faiss and metadata.json are aligned and contain relevant CapillaryTech documentation.
+API Errors: Ensure the OpenRouter API key is active. Check terminal logs for error details.
+Scraping Issues: Confirm URLs in metadata.json are accessible and return valid content.
 
-## 📹 Demo
+Submission Details
 
-🎥 A 1-minute demo video showcasing the chatbot’s functionality and CapillaryTech documentation responses is available here:
-🔗 **[Google Drive Demo Video Link](https://drive.google.com/)**
+Repository: https://github.com/YogeshRao005/capillary-chatbot
 
----
 
-## 📚 Project Summary
-
-The CapillaryTech Documentation Chatbot demonstrates how **retrieval-augmented generation (RAG)** can be effectively implemented for real-world enterprise documentation. By combining **local semantic search** with **LLM summarization**, it ensures both **accuracy** and **clarity** — making it a reliable assistant for CapillaryTech API users and developers.
-
----
-
-## 🏆 Evaluation Highlights
-
-| Criteria           | Description                                               |
-| ------------------ | --------------------------------------------------------- |
-| **Efficiency**     | Retrieves precise answers with minimal latency            |
-| **Accuracy**       | Responses grounded in scraped CapillaryTech documentation |
-| **Code Quality**   | Clean, modular, and well-commented Python and HTML code   |
-| **User Interface** | Responsive, modern, and intuitive                         |
-| **Error Handling** | Manages empty queries and API failures gracefully         |
-
----
-
-## 👨‍💻 Author
-
-**Developed by:** Yogesh Yadav
-📍 India
-💻 Passionate about AI, LLMs, and Intelligent Automation Systems
-
-```
-```
+License
+MIT License
