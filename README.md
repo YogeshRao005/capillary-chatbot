@@ -1,115 +1,82 @@
-CapillaryTech Documentation Chatbot
-A Flask-based chatbot that answers queries using pre-scraped CapillaryTech documentation. It leverages a FAISS index for efficient document retrieval and the OpenRouter API to generate concise, text-based responses without external links, ensuring accuracy and relevance.
-Features
+# CapillaryTech Documentation Chatbot
 
-Queries a FAISS index of CapillaryTech documentation for relevant content.
-Scrapes and cleans content from metadata URLs for context.
-Generates brief, bullet-point answers (2-3 points) using OpenRouter API.
-User-friendly web interface built with HTML and Tailwind CSS.
-Handles off-topic queries with appropriate text fallbacks.
+The **CapillaryTech Documentation Chatbot** is a Flask-based AI application that provides instant answers to queries related to **CapillaryTech APIs and documentation**. It uses **retrieval-augmented generation (RAG)** to combine the speed of vector search with the clarity of AI-generated summaries.
 
-Project Structure
-capillarytech-chatbot/
-├── data/
-│   └── faiss_index/
-│       ├── index.faiss
-│       └── metadata.json
-├── templates/
-│   └── index.html
-├── app.py
-├── requirements.txt
-└── README.md
+---
 
-Setup
+## 🧠 Overview
 
-Clone the Repository:git clone https://github.com/[your-username]/capillarytech-chatbot.git
-cd capillarytech-chatbot
+This chatbot efficiently retrieves information from CapillaryTech’s developer documentation using a **FAISS vector index**. It embeds text data using **Sentence Transformers**, searches semantically similar content for any user query, and generates concise responses using the **OpenRouter API**. The system ensures accuracy by relying entirely on locally scraped documentation data.
 
+---
 
-Install Dependencies:Ensure Python 3.8+ is installed, then run:pip install -r requirements.txt
+## ⚙️ Key Features
 
-Contents of requirements.txt:flask==2.3.2
-sentence-transformers==2.2.2
-faiss-cpu==1.7.4
-numpy==1.24.3
-requests==2.31.0
-beautifulsoup4==4.12.2
+- **Flask Backend** for lightweight web serving  
+- **FAISS Vector Index** for fast similarity search  
+- **Sentence Transformers** for embedding generation  
+- **OpenRouter Integration** for AI-powered summaries  
+- **Tailwind CSS Interface** for a modern and responsive UI  
+- **Debug Logging** for content verification and performance tracking  
+- **Offline Retrieval** from pre-scraped local data  
 
+---
 
-Prepare Data:
-Ensure data/faiss_index/index.faiss and metadata.json exist, containing pre-scraped CapillaryTech documentation embeddings and metadata (URLs and titles).
-Verify the FAISS index aligns with metadata.json to avoid incorrect data retrieval.
+## 🚀 How It Works
 
+1. Documentation pages from CapillaryTech’s developer site are **scraped and stored** locally.  
+2. Each document is **cleaned and embedded** using a Sentence Transformer model.  
+3. All embeddings are **indexed in FAISS** for fast retrieval.  
+4. The Flask server receives a **user query** and embeds it to perform a similarity search.  
+5. Top results are passed to the **OpenRouter API** to generate a **concise, bullet-point answer**.  
+6. The frontend displays the response and lists **relevant sources** for transparency.
 
-Run the Application:python app.py
+---
 
-Open http://localhost:5000 in a browser.
+## 🖥️ User Interface
 
-Usage
+The web interface is simple, clean, and built with **Tailwind CSS**.  
+It allows users to:
+- Enter questions directly in a chat-style input field  
+- View structured, concise responses  
+- See relevant source documentation links  
 
-Web Interface:
-Access the chatbot at http://localhost:5000.
-Enter queries about CapillaryTech APIs or documentation (e.g., "What are path parameters?", "How to authenticate?").
-Receive brief, text-based answers in 2-3 bullet points without links.
+---
 
+## 🧩 Tech Stack
 
-Example Queries and Responses:
-Query: "What are path parameters?"
-Answer: - Path parameters are URL variables like {userId}.
-- They identify resources in API calls.
+- **Python 3.10+**  
+- **Flask**  
+- **FAISS**  
+- **Sentence Transformers (all-MiniLM-L6-v2)**  
+- **OpenRouter API**  
+- **Tailwind CSS**  
 
+---
 
+## 📊 Example Output
 
+**User Query:**  
+> How to fetch user journey history in CapillaryTech?
 
-Query: "How to authenticate?"
-Answer: - Use API keys in Authorization header.
-- Bearer <token> format.
+**Response:**  
+- Use the `/journey/history` API endpoint for user session tracking.  
+- Include the `user_id` and date filters to narrow results.  
+- Responses are returned in JSON format with session attributes.
 
+**Sources:**  
+- [Search User Journey History](https://docs.capillarytech.com/docs/search-user-journey-history)  
+- [Session Logs](https://docs.capillarytech.com/docs/session_logs)
 
+---
 
+## 🧰 Debugging
 
-Query: "What is the salary?"
-Answer: - Check official careers page for job-related queries.
+All FAISS retrieval steps and API responses are logged for verification.  
+If results appear off-topic or missing, logs help confirm which documents were retrieved and why.
 
+---
 
+## 📘 Summary
 
-
-
-
-Debugging:
-Check terminal logs for scraped content (Scraped <url>: ...) and context (Context for ...) to ensure data is sourced correctly.
-Verify the OpenRouter API key is valid and has sufficient quota.
-
-
-
-Dependencies
-
-Python 3.8+
-Flask==2.3.2
-sentence-transformers==2.2.2
-faiss-cpu==1.7.4
-numpy==1.24.3
-requests==2.31.0
-beautifulsoup4==4.12.2
-
-Notes
-
-The chatbot uses only pre-scraped data from data/faiss_index/ to ensure accurate responses.
-Responses are generated without external links, focusing on concise explanations.
-Off-topic queries (e.g., job-related) are handled with appropriate text fallbacks.
-
-Demo
-A 1-minute demo video showcasing the chatbot’s functionality is available at: [Google Drive link] (to be updated after recording).
-Troubleshooting
-
-Incorrect Answers: Verify index.faiss and metadata.json are aligned and contain relevant CapillaryTech documentation.
-API Errors: Ensure the OpenRouter API key is active. Check terminal logs for error details.
-Scraping Issues: Confirm URLs in metadata.json are accessible and return valid content.
-
-Submission Details
-
-Repository: https://github.com/YogeshRao005/capillary-chatbot
-
-
-License
-MIT License
+This project showcases a **fully functional AI documentation assistant** designed for enterprise use cases. It combines **semantic search, AI summarization, and web deployment** into one efficient tool for exploring technical documentation. The chatbot demonstrates how intelligent retrieval and local data integration can create accurate, context-aware answers for developers.

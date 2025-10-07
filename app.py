@@ -1,27 +1,4 @@
-"""
-CapillaryTech Documentation Chatbot
-===================================
-A Flask-based chatbot that queries a pre-built FAISS index of CapillaryTech docs,
-fetches and processes content from top sources, and uses OpenRouter API to generate
-structured text responses. Updated to prioritize concise, accurate text solutions.
 
-Author: [Your Name]
-Date: October 08, 2025
-
-Usage:
-    1. Ensure data/faiss_index/index.faiss and metadata.json exist.
-    2. pip install -r requirements.txt
-    3. python app.py
-    4. Open http://localhost:5000
-
-Dependencies (requirements.txt):
-    flask==2.3.2
-    sentence-transformers==2.2.2
-    faiss-cpu==1.7.4
-    numpy==1.24.3
-    requests==2.31.0
-    beautifulsoup4==4.12.2
-"""
 
 import os
 import json
